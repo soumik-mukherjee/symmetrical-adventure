@@ -27,6 +27,6 @@ jobs:
 
     - uses: actions/upload-artifact@v4
       with:
-        name: bin
+        name: symmetrical-adventure-linux-amd64
         path: symmetrical-adventure
         compression-level: 6 # GNU Gzip
