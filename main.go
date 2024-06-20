@@ -4,9 +4,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-	"os"
-
-	"github.com/joho/godotenv"
+	"symmetrical-adventure/internal/configs"
 )
 
 func handler(w http.ResponseWriter, r *http.Request) {
@@ -19,11 +17,14 @@ func handler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	godotenv.Load()
+	// load configurations from config file
+	config, err := configs.NewConfiguration()
+	if err != nil {
+		fmt.Errorf("could not load configuration: %v", err)
+	}
 	http.HandleFunc("/", handler)
-	host := os.Getenv("HOST")
-	port := os.Getenv("PORT")
+	host := config.Fe.Host //os.Getenv("HOST")
+	port := config.Fe.Listen_port
 	log.Printf("Running server on host address: %s and port: %s\n", host, port)
 	http.ListenAndServe(fmt.Sprintf("%s:%s", host, port), nil)
-
 }
